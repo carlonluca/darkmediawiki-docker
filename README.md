@@ -1,0 +1,2 @@
+# DarkMediaWiki
+DarkMediaWiki is a docker image coming from MediaWiki that includes a DarkVector theme from https://github.com/dolfinus/DarkVector. The skin can be set following the [documentation](https://www.mediawiki.org/wiki/Manual:Skin_configuration#:~:text=skins%20are%20analogous.-,Setting%20the%20default%20skin%20for%20a%20wiki,specified%20in%20the%20skin%20file.) (skin name is darkvector).
