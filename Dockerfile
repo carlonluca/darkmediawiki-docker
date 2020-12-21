@@ -1,4 +1,4 @@
-FROM mediawiki:1.34.4
+FROM mediawiki:1.35.0
 ADD https://github.com/dolfinus/DarkVector/archive/master.zip /var/www/html/skins/
 WORKDIR /var/www/html/skins/
 RUN apt-get update && apt-get install -y unzip
