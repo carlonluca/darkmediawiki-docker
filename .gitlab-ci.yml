@@ -2,15 +2,30 @@ stages:
   - build
 
 docker-build:
-  image: docker:latest
+  image: carlonluca/docker-multiarch:dev
   stage: build
   services:
     - docker:dind
   before_script:
     - docker login -u "$CI_DOCKER_HUB_USER" -p "$CI_DOCKER_HUB_PASSWORD" docker.io
   script:
-    - docker build -t carlonluca/darkmediawiki:"$VERSION" -t carlonluca/darkmediawiki:latest .
-    - docker push carlonluca/darkmediawiki:"$VERSION"
-    - docker push carlonluca/darkmediawiki:latest
+    - export DOCKER_CLI_EXPERIMENTAL=enabled
+    - docker run --privileged --rm tonistiigi/binfmt --install all
+    - docker buildx create --name mybuilder --use --platform linux/arm64/v8,linux/386,linux/arm/v7,linux/arm/v6
+    - docker buildx use mybuilder
+    #- docker buildx build --push --platform linux/arm/v7,linux/arm64/v8,linux/amd64,linux/386 -t carlonluca/darkmediawiki:"$VERSION" .
+    #- docker push carlonluca/darkmediawiki:"$VERSION"
+    #- docker push carlonluca/darkmediawiki:latest
+    - docker buildx build --push --platform linux/arm/v6 -t carlonluca/darkmediawiki:$VERSION-armv6 .
+    - docker buildx build --push --platform linux/arm/v7 -t carlonluca/darkmediawiki:$VERSION-armv7 .
+    - docker buildx build --push --platform linux/arm64/v8 -t carlonluca/darkmediawiki:$VERSION-armv8 .
+    - docker buildx build --push --platform linux/amd64 -t carlonluca/darkmediawiki:$VERSION-amd64 .
+    - docker buildx build --push --platform linux/386 -t carlonluca/darkmediawiki:$VERSION-386 .
+    #- docker buildx imagetools create -t carlonluca/darkmediawiki:$VERSION carlonluca/darkmediawiki:$VERSION-armv6 carlonluca/darkmediawiki:$VERSION-armv7 carlonluca/darkmediawiki:$VERSION-armv8 carlonluca/darkmediawiki:$VERSION-amd64 carlonluca/darkmediawiki:$VERSION-386
+    - docker manifest create carlonluca/darkmediawiki:$VERSION --amend carlonluca/darkmediawiki:$VERSION-armv6 --amend carlonluca/darkmediawiki:$VERSION-armv7 --amend carlonluca/darkmediawiki:$VERSION-armv8 --amend carlonluca/darkmediawiki:$VERSION-amd64 --amend carlonluca/darkmediawiki:$VERSION-386
+    - docker manifest push carlonluca/darkmediawiki:$VERSION
+    #- docker push carlonluca/darkmediawiki:$VERSION
+    - docker buildx stop mybuilder
+    - docker buildx rm mybuilder
   rules:
     - when: manual
