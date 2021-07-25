@@ -1,6 +1,8 @@
 # DarkMediaWiki
 DarkMediaWiki is a docker image coming from MediaWiki that includes a DarkVector theme from https://github.com/dolfinus/DarkVector.
 
+![shot](shot.png)
+
 ## Installation
 To select the dark theme, add the following to the LocalSettings.php file:
 
