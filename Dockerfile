@@ -1,5 +1,5 @@
 FROM mediawiki:1.37.0
-ADD https://github.com/carlonluca/DarkVector/archive/refs/heads/master.zip /var/www/html/skins/
+ADD https://github.com/carlonluca/DarkVector/archive/refs/heads/fix137.zip /var/www/html/skins/
 WORKDIR /var/www/html/skins/
 RUN apt-get update && apt-get install -y unzip
 RUN unzip master.zip
