@@ -1,4 +1,4 @@
-FROM mediawiki:1.38.4
+FROM mediawiki:1.39.0
 ADD https://github.com/carlonluca/DarkVector/archive/refs/heads/fix137.zip /var/www/html/skins/
 WORKDIR /var/www/html/skins/
 RUN apt-get update && apt-get install -y unzip
