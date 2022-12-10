@@ -1,7 +1,7 @@
 FROM mediawiki:1.39.0
-ADD https://github.com/carlonluca/DarkVector/archive/refs/heads/fix137.zip /var/www/html/skins/
+ADD https://github.com/dolfinus/DarkVector/archive/1195cfb40c89aa4398b934e27d0dd22cb787be37.zip /var/www/html/skins/
 WORKDIR /var/www/html/skins/
 RUN apt-get update && apt-get install -y unzip
-RUN unzip fix137.zip
-RUN mv DarkVector-fix137 DarkVector
+RUN unzip 1195cfb40c89aa4398b934e27d0dd22cb787be37.zip
+RUN mv DarkVector-1195cfb40c89aa4398b934e27d0dd22cb787be37 DarkVector
 RUN apt-get remove -y unzip && apt-get clean
