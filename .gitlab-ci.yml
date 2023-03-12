@@ -4,6 +4,8 @@ stages:
 docker-build:
   image: carlonluca/docker-multiarch:latest
   stage: build
+  tags:
+    - arm64
   services:
     - docker:dind
   before_script:
