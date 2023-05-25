@@ -21,10 +21,8 @@ docker-build:
     - docker buildx build --push --platform linux/arm64/v8 -t carlonluca/darkmediawiki:dev-armv8 .
     - docker buildx build --push --platform linux/amd64 -t carlonluca/darkmediawiki:dev-amd64 .
     - docker buildx build --push --platform linux/386 -t carlonluca/darkmediawiki:dev-386 .
-    - docker manifest create carlonluca/darkmediawiki:$VERSION --amend carlonluca/darkmediawiki:dev-armv6 --amend carlonluca/darkmediawiki:dev-armv7 --amend carlonluca/darkmediawiki:dev-armv8 --amend carlonluca/darkmediawiki:dev-amd64 --amend carlonluca/darkmediawiki:dev-386
-    - docker manifest create carlonluca/darkmediawiki:latest --amend carlonluca/darkmediawiki:dev-armv6 --amend carlonluca/darkmediawiki:dev-armv7 --amend carlonluca/darkmediawiki:dev-armv8 --amend carlonluca/darkmediawiki:dev-amd64 --amend carlonluca/darkmediawiki:dev-386
-    - docker manifest push carlonluca/darkmediawiki:$VERSION
-    - docker manifest push carlonluca/darkmediawiki:latest
+    - docker buildx imagetools create -t carlonluca/darkmediawiki:$VERSION carlonluca/darkmediawiki:dev-armv6 carlonluca/darkmediawiki:dev-armv7 carlonluca/darkmediawiki:dev-armv8 carlonluca/darkmediawiki:dev-amd64 carlonluca/darkmediawiki:dev-386
+    - docker buildx imagetools create -t carlonluca/darkmediawiki:latest carlonluca/darkmediawiki:dev-armv6 carlonluca/darkmediawiki:dev-armv7 carlonluca/darkmediawiki:dev-armv8 carlonluca/darkmediawiki:dev-amd64 carlonluca/darkmediawiki:dev-386
     - docker buildx stop mybuilder_wiki
     - docker buildx rm mybuilder_wiki
   rules:
